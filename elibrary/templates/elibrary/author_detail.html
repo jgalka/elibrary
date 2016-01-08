@@ -3,6 +3,16 @@
 {% block 'content' %}
 
 <div><a href="{% url 'elibrary:author-list' %}">powrót do listy autorów</a></div>
-Profil autora: {{ object }}
+Profil autora: {{ object.last_name }}, {{ object.first_name}}
+
+<h2>Książki:</h2>
+<ul>
+	{% for book in object.book_set.all %}
+	<li><a href="{% url 'elibrary:book-detail' pk=book.id %}">{{ book.title }}</a>
+	</li>
+	<li><a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+	</li>
+	{% endfor %}
+</ul>
 
 {% endblock %}

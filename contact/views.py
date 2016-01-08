@@ -11,13 +11,13 @@ from .forms import MessageForm, ContactForm
 #    model = Message
 
 class MessageAddView(FormView):
-    form_class = ContactForm
+    form_class = MessageForm
     template_name = 'contact/message_form.html'
     success_url = '/'
 
-    # def form_valid(self, form):
-    #     form.save() #bo form jest instancją ModelForm która posiada metodę save
-    #     return super(MessageAddView, self).form_valid(form)
+    def form_valid(self, form):
+        form.save() #bo form jest instancją ModelForm która posiada metodę save
+        return super(MessageAddView, self).form_valid(form)
 
 
 # Create your views here.

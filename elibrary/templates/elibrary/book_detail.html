@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block 'content' %}
+
+<a href="{% url 'elibrary:book-list' %}"> Powrót do listy książek</a>
+
+<h1>{{ object.title }}</h1>
+
+<h2>Wydania:</h2>
+<ul>
+
+{% for edition in book.bookedition_set.all %}
+<li>{{ edition.date|date:"Y" }} - {{ edition.publisher.name }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

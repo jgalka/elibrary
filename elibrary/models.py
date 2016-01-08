@@ -1,13 +1,23 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 # Create your models here.
 
 class Author(models.Model):
-	first_name = models.CharField(max_length=20)
-	last_name = models.CharField(max_length=50)
+	first_name = models.CharField(verbose_name=_("first name"), max_length=20)
+	last_name = models.CharField(_("last_name"), max_length=50)
+# verbose name jest domyślnie jako pierwsze i można pominąć
+# pootle - platforma do tłumaczeń
 
 	def __str__(self):
-		return "{first_name} {last_name}".format(first_name=self.first_name, last_name=self.last_name)
+		return _("{first_name} {last_name}").format(first_name=self.first_name, last_name=self.last_name)
+
+	class Meta:
+		ordering = ('last_name', 'first_name')
+		verbose_name = _('author')
+		verbose_name_plural = _('authors')
+			
 
 class Publisher(models.Model):
 	name = models.CharField(max_length=70)
@@ -30,8 +40,11 @@ class Book(models.Model):
 	categories = models.ManyToManyField(BookCategory)
 	#author = models.ForeignKey('Author')
 
-		def __str__(self):
+	def __str__(self):
 		return self.title
+
+	def get_absolute_url(self):
+		return reverse_lazy('elibrary:book-detail', kwargs={'pk':self.id})
 
 class BookEdition(models.Model):
 	"""
