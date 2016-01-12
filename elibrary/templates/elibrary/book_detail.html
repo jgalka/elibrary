@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load elibrary_tags %}
 
 {% block 'content' %}
 
@@ -11,6 +11,7 @@
 
 {% for edition in book.bookedition_set.all %}
 <li>{{ edition.date|date:"Y" }} - {{ edition.publisher.name }}</li>
+<li>{{ edition.date|pub_date }} - {{ edition.publisher.name }}</li>
 {% endfor %}
 </ul>
 
